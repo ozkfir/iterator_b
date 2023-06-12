@@ -15,9 +15,14 @@ int main() {
     std::cout << "Size of container: " << container.size() << std::endl;
 
     // Use AscendingIterator to display elements in ascending order
-    std::cout << "Elements in ascending order:\n";
+    std::cout << "Elements in ascending order1111:\n";
+
     MagicalContainer::AscendingIterator ascIter(container);
+//    std::vector<int *> ontainer=*(ascIter.M_container);
+//
+//   std::cout <<*ontainer[0] <<"\n";
     for (auto it = ascIter.begin(); it != ascIter.end(); ++it) {
+        std::cout << "Elements in ascending order:222222\n";
         std::cout << *it << ' ';   // 2 3 9 17 25
     }
     std::cout << std::endl;
@@ -25,7 +30,10 @@ int main() {
     // Use DescendingIterator to display elements in descending order
     std::cout << "Elements in cross order:\n";
     MagicalContainer::SideCrossIterator crossIter(container);
+    std::cout << "Elements in cross order:\n";
+
     for (auto it = crossIter.begin(); it != crossIter.end(); ++it) {
+        std::cout << "Elements in cross order:\n";
         std::cout << *it << ' ';  // 2 25 3 17 9
     }
     std::cout << std::endl;

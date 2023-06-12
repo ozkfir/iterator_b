@@ -7,47 +7,41 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <memory>
 
 namespace ariel {}
 
     class MagicalContainer {
-    public:
-        std::vector<int> items;
-        std::vector<int*> items1;
-        std::vector<int*> items2;
-        std::vector<int*> items3;
-
-
+        std::vector<std::shared_ptr<int>>  items1;
+        std::vector<std::shared_ptr<int>> items2;
+        std::vector<std::shared_ptr<int>>  items3;
     public:
     MagicalContainer();
         void  addElement(int num);
         int size();
         void removeElement(int num);
-//        ~MagicalContainer();
-        std::vector<int*> getitems1();
-        std::vector<int*> getitems2();
-        std::vector<int*> getitems3();
+        ~MagicalContainer();
+
 
     class iterator{
-        std::vector<int *> M_container;
+    public:
+        std::vector<std::shared_ptr<int>> M_container;
         size_t currentIndex;
     public:
-        iterator(std::vector<int *> *container, size_t currentIndex_) : M_container(*container), currentIndex(currentIndex_){};
+        iterator(std::vector<std::shared_ptr<int>> *container, size_t currentIndex_) : M_container(*container), currentIndex(currentIndex_){};
 
         int getsize();
-        int operator*();
-        std::vector<int *> * getvector();
-        std::vector<int *> getvector2();
+        std::vector<std::shared_ptr<int>> * getvector();
+        int& operator*();
         iterator& operator++();
-//        iterator(vector<int*> container*,int num):kind(num),M_container(container){}
-//        iterator(iterator* iter,int num){}
         bool operator!=(const iterator other) const;
         bool operator> (const iterator other) const;
         bool operator< (const iterator other) const;
-        void operator= (const iterator other) const;
+        void operator= (iterator other) ;
         bool operator==(const iterator other) const;
         ~iterator();
         };
+
 
 
         class AscendingIterator: public iterator{
@@ -58,6 +52,7 @@ namespace ariel {}
             AscendingIterator end();
             ~AscendingIterator();
         };
+
 
         class SideCrossIterator: public iterator{
         public:
@@ -80,7 +75,3 @@ namespace ariel {}
 };
 
 #endif
-////int getcurrentIndex();
-////void  set_currentIndex_plus_one();
-//
-//virtual iterator& operator++();

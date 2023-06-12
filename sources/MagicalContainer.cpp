@@ -3,7 +3,6 @@
 #include "MagicalContainer.hpp"
 using namespace std;
 #include <algorithm>
-
 bool isPrime(int number) {
     if (number <= 1) {
         return false;
@@ -20,38 +19,23 @@ bool isPrime(int number) {
 
 
 int MagicalContainer::size() {
-    return this->items.size();
+    return this->items1.size();
 }
 
 MagicalContainer::MagicalContainer() {
     items1.clear();
-    items.clear();
     items2.clear();
     items3.clear();
 }
-//MagicalContainer::~MagicalContainer() {
-//    for (int* ptr : items1) {
-//        delete ptr;
-//    }
-////    for (int i = 0; i < items1.size(); ++i) {
-////        delete items1[(size_t )i];
-//    items1.clear();  // Optional, but recommended to clear the vector after deallocating the memory
-//    items2.clear();  // Optional, but recommended to clear the vector after deallocating the memory
-//    items3.clear();  // Optional, but recommended to clear the vector after deallocating the memory
-//    items.clear();  // Optional, but recommended to clear the vector after deallocating the memory
-//
-//    }
-
-
-
-std::vector<int*> MagicalContainer::getitems1() {return items1;}
-std::vector<int*>  MagicalContainer::getitems2() {return items2;}
-std::vector<int*> MagicalContainer::getitems3() {return items3;}
-
+    MagicalContainer::~MagicalContainer() {
+        //        for (int i = 0; i < items1.size(); ++i) {
+//            delete items1[(size_t)i];
+//        }
+//        items1.clear();
+    }
 
 void MagicalContainer::addElement(int num) {
-    int *temp1= new int(num);
-    items.push_back(*temp1);
+    shared_ptr <int> temp1=std::make_shared<int>(num);
     int index = 0;
     while (index < items1.size() && *items1[(size_t)index] < num) {
         index++;
@@ -82,18 +66,14 @@ void MagicalContainer::addElement(int num) {
 
 
 void MagicalContainer::removeElement(int num) {
-    auto it = std::lower_bound(items.begin(), items.end(), num);
-
-    if (it != items.end()) {
-
-        for (auto it = items1.begin(); it != items1.end();) {
-            if (**it == num) {
-                it = items1.erase(it);
-                break;
-            } else {
-                ++it;
-            }
+    bool temp = false;
+    for ( int i = 0; i <items1.size() ; ++i) {
+        if(num==*items1[(size_t)i]){
+            temp= true;
+            break;
         }
+    }
+    if (temp) {
 
         for (auto it = items3.begin(); it != items3.end();) {
             if (**it == num) {
@@ -103,6 +83,15 @@ void MagicalContainer::removeElement(int num) {
                 ++it;
             }
         }
+        for (auto it = items1.begin(); it != items1.end(); ++it) {
+            if (**it == num) {
+//                delete *it;
+//                *it = nullptr;
+                it = items1.erase(it);
+                break;
+            }
+        }
+
         items2.clear();
         bool isLeft = true;
         size_t middle = items1.size()/2;
@@ -116,9 +105,6 @@ void MagicalContainer::removeElement(int num) {
             isLeft = !isLeft;
         }
         items2.push_back(items1[indexC]);
-//int * temp= items[find(items.begin(), items.end(), num)];
-        items.erase(std::remove(items.begin(), items.end(), num), items.end());
-
     }else
         throw runtime_error("");
 }

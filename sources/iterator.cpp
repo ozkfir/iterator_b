@@ -4,13 +4,9 @@
 using namespace std;
 
 
-std::vector<int *> *MagicalContainer::iterator::getvector() {return &M_container;}
-std::vector<int *> MagicalContainer::iterator::getvector2() {return M_container;}
+std::vector<std::shared_ptr<int>> *MagicalContainer::iterator::getvector() {return &M_container;}
 MagicalContainer::iterator::~iterator() {}
 
-//int MagicalContainer::iterator::getcurrentIndex() {return currentIndex;}
-//
-//void  MagicalContainer::iterator::set_currentIndex_plus_one() {currentIndex++;}
 bool MagicalContainer::iterator::operator!=(const MagicalContainer::iterator other) const {return this->currentIndex != other.currentIndex;}
 
 bool MagicalContainer::iterator::operator<(const MagicalContainer::iterator other) const {return  this->currentIndex < other.currentIndex;}
@@ -19,20 +15,18 @@ bool MagicalContainer::iterator::operator>(const MagicalContainer::iterator othe
 
 bool MagicalContainer::iterator::operator==(const MagicalContainer::iterator other) const {return this->currentIndex == other.currentIndex;}
 
-void MagicalContainer::iterator::operator=(const MagicalContainer::iterator other) const {
-    if(&(this->M_container)!=&(other.M_container))
+void MagicalContainer::iterator::operator=( MagicalContainer::iterator other)  {
+    if ((this->M_container) != (other.M_container))
         throw runtime_error(" ");
-//    int temp=other.currentIndex;
-//    this->currentIndex = temp;
-//    this->M_container=other.M_container;/////////////distrucur?
+    currentIndex = other.currentIndex;
 }
-
-
 int MagicalContainer::iterator::getsize() {return this->M_container.size();}
 
-
-
-int MagicalContainer::iterator::operator*() {return *(this->M_container[currentIndex]);}
+int& MagicalContainer::iterator::operator*() {
+    if (currentIndex >= M_container.size())
+        throw runtime_error("Invalid iterator dereference");
+    return *(M_container)[currentIndex];
+}
 
 MagicalContainer::iterator& MagicalContainer::iterator::operator++() {
     if(this->M_container.size()<=currentIndex)
