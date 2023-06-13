@@ -12,9 +12,9 @@
 namespace ariel {}
 
     class MagicalContainer {
-        std::vector<std::shared_ptr<int>>  items1;
-        std::vector<std::shared_ptr<int>> items2;
-        std::vector<std::shared_ptr<int>>  items3;
+        std::shared_ptr<std::vector<std::shared_ptr<int>>>  items1;
+        std::shared_ptr<std::vector<std::shared_ptr<int>>> items2;
+        std::shared_ptr<std::vector<std::shared_ptr<int>>>  items3;
     public:
     MagicalContainer();
         void  addElement(int num);
@@ -25,13 +25,13 @@ namespace ariel {}
 
     class iterator{
     public:
-        std::vector<std::shared_ptr<int>> M_container;
+        std::shared_ptr<std::vector<std::shared_ptr<int>>>  M_container;
         size_t currentIndex;
     public:
-        iterator(std::vector<std::shared_ptr<int>> *container, size_t currentIndex_) : M_container(*container), currentIndex(currentIndex_){};
+        iterator(std::shared_ptr<std::vector<std::shared_ptr<int>>> container, size_t currentIndex_) : M_container(container), currentIndex(currentIndex_){};
 
         int getsize();
-        std::vector<std::shared_ptr<int>> * getvector();
+        std::shared_ptr<std::vector<std::shared_ptr<int>>> getvector();
         int& operator*();
         iterator& operator++();
         bool operator!=(const iterator other) const;
