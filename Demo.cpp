@@ -3,12 +3,9 @@
 
 using namespace ariel;
 int main() {
-
     // Create a MagicalContainer and add some elements
     MagicalContainer container;
-    std::cout << "Elements in cross order:\n";
     container.addElement(17);
-    std::cout << "Elements in cross order:\n";
     container.addElement(2);
     container.addElement(25);
     container.addElement(9);
